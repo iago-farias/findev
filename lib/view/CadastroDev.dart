@@ -18,9 +18,7 @@ class _CadastroDevState extends State<CadastroDev> {
     String uri = "https://api.github.com/users/" + userLogin;
     http.Response response = await http.get(uri);
     user = json.decode(response.body);
-
     // "message": "Not Found"
-
     if (user['message'] != "Not Found") {
       print(user['login']);
     } else {
