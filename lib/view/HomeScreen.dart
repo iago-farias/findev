@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -22,28 +23,40 @@ class _HomeScreenState extends State<HomeScreen> {
                 ButtonTheme(
                   minWidth: 330,
                   child: RaisedButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(10.0)),
                     padding: EdgeInsets.all(10),
                     color: Color(0xFF476268),
                     onPressed: () {
                       Navigator.pushNamed(context, "/listdevs");
                     },
-                    child: Text("Desejo encontrar Dev’s",
-                    style: TextStyle(color: Color(0xffffffff), fontSize: 22)
+                    child: Text(
+                      "Desejo encontrar Dev's",
+                      style: GoogleFonts.offside(
+                        color: Color(0xFFFFFFFF),
+                        fontSize: 22,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 30),
                 ButtonTheme(
                   minWidth: 330,
                   child: RaisedButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(10.0)),
                     padding: EdgeInsets.all(10),
                     color: Color(0xFF476268),
                     onPressed: () {
                       Navigator.pushNamed(context, "/cadastro");
                     },
-                    child: Text("Sou um Dev", 
-                    style: TextStyle(color: Color(0xffffffff), fontSize: 22)
-                    ),
+                    child: Text("Sou um Dev",
+                        style: GoogleFonts.offside(
+                          color: Color(0xFFFFFFFF),
+                          fontSize: 22,
+                          fontWeight: FontWeight.w500,
+                        )),
                   ),
                 ),
               ],
