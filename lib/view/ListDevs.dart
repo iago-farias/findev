@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../components/DevInfoContainer.dart';
+import '../model/Dev.dart';
 
 class ListDevs extends StatefulWidget {
   @override
@@ -19,14 +23,14 @@ class _ListDevsState extends State<ListDevs> {
       'name': "Dev 2",
       'email': "dev@teste.com",
       'githubUserName': 'devGit1',
-      'techs': ["Java", "C"],
+      'techs': ["Java"],
       'whatsapp': "999999999",
     },
     {
       'name': "Dev 3",
       'email': "dev@teste.com",
       'githubUserName': 'devGit1',
-      'techs': ["Java", "C"],
+      'techs': ["Java", "C", "C++"],
       'whatsapp': "999999999",
     },
   ];
@@ -35,7 +39,8 @@ class _ListDevsState extends State<ListDevs> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFF1F1F1),
-      body: Container(
+      body: SingleChildScrollView(
+        child: Container(
         margin: EdgeInsets.only(top: 20),
         alignment: Alignment.center,
         child: Column(
@@ -83,88 +88,13 @@ class _ListDevsState extends State<ListDevs> {
                 ),
               ),
             ),
-            Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                  color: Color(0x57044655),
-                ),
-                width: 350,
-                height: 170,
-                margin: EdgeInsets.only(top: 10),
-                padding: EdgeInsets.only(left: 15, right: 15),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[                                                
-                         Container(
-                           alignment: Alignment.center,
-                           child:  CircleAvatar(
-                          radius: 50,
-                          backgroundColor: Color(0xFF476268),
-                          child: CircleAvatar(
-                          radius: 45,
-                          child: ClipOval(
-                            child: Image.network(
-                              'https://avatars3.githubusercontent.com/u/61480933?v=4',
-                              frameBuilder: (BuildContext context, Widget child,
-                                  int frame, bool wasSynchronouslyLoaded) {
-                                if (wasSynchronouslyLoaded) {
-                                  return child;
-                                }
-                                return AnimatedOpacity(
-                                  child: child,
-                                  opacity: frame == null ? 0 : 1,
-                                  duration: const Duration(seconds: 1),
-                                  curve: Curves.easeOut,
-                                );
-                              },
-                            ),
-                          ), 
-                          ),
-                          ),
-                         ),
-                         
-                        ],
-                      ),
-                      Column(
-                        children: <Widget>[
-                          const SizedBox(height: 15),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Text("Nome"),
-                            ],
-                          ),
-                          const SizedBox(height: 15),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: <Widget>[
-                              Column(
-                                children: <Widget>[
-                                  Text("Techs 1"),
-                                  Text("Techs 2"),
-                                  Text("Techs 3"),
-                                ],
-                              ),
-                              Column(
-                                children: <Widget>[Text("Bio")],
-                              ),
-                            ],
-                          ),
-                          Column(
-                            children: <Widget>[
-                              Text("Botões"),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ]))
+          ...devs.map((dev) => 
+            devInfoContainer(Dev.fromJson(dev)),
+          ),
           ],
         ),
       ),
+      )
     );
   }
 }
