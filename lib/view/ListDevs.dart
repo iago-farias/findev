@@ -17,21 +17,18 @@ class _ListDevsState extends State<ListDevs> {
       'email': "dev@teste.com",
       'githubUserName': 'devGit1',
       'techs': ["Java", "C"],
-      'whatsapp': "999999999",
     },
     {
       'name': "Dev 2",
       'email': "dev@teste.com",
       'githubUserName': 'devGit1',
       'techs': ["Java"],
-      'whatsapp': "999999999",
     },
     {
       'name': "Dev 3",
       'email': "dev@teste.com",
       'githubUserName': 'devGit1',
       'techs': ["Java", "C", "C++"],
-      'whatsapp': "999999999",
     },
   ];
 

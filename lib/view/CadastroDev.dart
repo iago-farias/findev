@@ -21,7 +21,7 @@ class _CadastroDevState extends State<CadastroDev> {
     
     // "message": "Not Found"
     if (user['message'] != "Not Found") {
-      print(user['login']);
+      print(user);
     } else {
       print('Error');
     }
