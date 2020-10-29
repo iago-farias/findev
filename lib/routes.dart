@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'view/HomeScreen.dart';
 import 'view/CadastroDev.dart';
 import 'view/ListDevs.dart';
+import 'view/GitHubWebView.dart';
 
 class Routes extends StatelessWidget {
   // This widget is the root of your application.
@@ -13,6 +14,7 @@ class Routes extends StatelessWidget {
         '/home': (context) => HomeScreen(),
         '/listdevs': (context) => ListDevs(),
         '/cadastro': (context) => CadastroDev(),
+        '/webview': (context) => GitHubWebView()
       }
   );
   }
