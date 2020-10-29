@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "523176238341",
+    "firebase_url": "https://findev-af82f.firebaseio.com",
+    "project_id": "findev-af82f",
+    "storage_bucket": "findev-af82f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:523176238341:android:25a2d7cd423d5efdedeb6c",
+        "android_client_info": {
+          "package_name": "com.example.findev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "523176238341-p6e9s9fo8sfdmo78krfhbkqhipql0eeb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCo5jp9M2iFGC5IygJZVqoeNk9tPMdcz_I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "523176238341-p6e9s9fo8sfdmo78krfhbkqhipql0eeb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
