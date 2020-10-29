@@ -11,7 +11,7 @@ Widget devInfoContainer(Dev dev) {
         subject: "finDev - Proposta",
         recipients: [dev.email],
         body:
-            "Olá ${dev.nome}, estou entrando em contato para contratar seus serviços.",
+            "Olá ${dev.name}, estou entrando em contato para contratar seus serviços.",
         isHTML: false);
     try {
       await FlutterEmailSender.send(email);
@@ -21,9 +21,7 @@ Widget devInfoContainer(Dev dev) {
     }
   }
 
-  Widget showWebView() {
-     
-  }
+  Widget showWebView() {}
 
   return Container(
       decoration: BoxDecoration(
@@ -76,7 +74,7 @@ Widget devInfoContainer(Dev dev) {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Text(dev.nome,
+                    Text(dev.name,
                         style: GoogleFonts.offside(
                           color: Color(0xFFFFFFFF),
                           fontSize: 16,
