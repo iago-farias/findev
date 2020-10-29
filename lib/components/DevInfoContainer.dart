@@ -2,10 +2,9 @@ import 'package:findev/model/Dev.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-Widget devInfoContainer(Dev dev) {
+Widget devInfoContainer(Dev dev, BuildContext context) {
   Future<void> sendMail() async {
     final Email email = Email(
         subject: "finDev - Proposta",
@@ -20,8 +19,6 @@ Widget devInfoContainer(Dev dev) {
       print(error);
     }
   }
-
-  Widget showWebView() {}
 
   return Container(
       decoration: BoxDecoration(
@@ -47,7 +44,7 @@ Widget devInfoContainer(Dev dev) {
                       radius: 45,
                       child: ClipOval(
                         child: Image.network(
-                          'https://avatars3.githubusercontent.com/u/61480933?v=4',
+                          dev.githubProfilePicUrl,
                           frameBuilder: (BuildContext context, Widget child,
                               int frame, bool wasSynchronouslyLoaded) {
                             if (wasSynchronouslyLoaded) {
@@ -106,13 +103,17 @@ Widget devInfoContainer(Dev dev) {
                       ),
                       Column(
                         children: <Widget>[
-                          Text(
-                            "Bio",
+                          SizedBox(
+                            width: 65,
+                            child: Text(
+                            dev.location,
                             style: GoogleFonts.offside(
+                              textStyle: TextStyle(),
                               color: Color(0xFFFFFFFF),
-                              fontSize: 16,
+                              fontSize: 15,
                               fontWeight: FontWeight.w400,
                             ),
+                          ),
                           ),
                         ],
                       ),
@@ -129,7 +130,7 @@ Widget devInfoContainer(Dev dev) {
                         padding: EdgeInsets.all(5),
                         color: Color(0xFF476268),
                         onPressed: () {
-                          showWebView();
+                          Navigator.pushNamed(context, "/webview", arguments: dev.githubUserName);
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -165,5 +166,6 @@ Widget devInfoContainer(Dev dev) {
                 ),
               ],
             ),
-          ]));
+          ])
+          );
 }

@@ -32,9 +32,10 @@ dependencies:
   google_fonts:
   font_awesome_flutter: ^8.10.0
   flutter_email_sender: ^3.0.1
-  webview_flutter: ^0.3.24
   cloud_firestore:
   firebase_core:
+  webview_flutter: ^1.0.5
+
 
 dev_dependencies:
   flutter_test:

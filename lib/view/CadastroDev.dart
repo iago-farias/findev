@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
@@ -18,7 +19,7 @@ class _CadastroDevState extends State<CadastroDev> {
     String uri = "https://api.github.com/users/" + userLogin;
     http.Response response = await http.get(uri);
     user = json.decode(response.body);
-    
+
     // "message": "Not Found"
     if (user['message'] != "Not Found") {
       print(user);
@@ -29,7 +30,12 @@ class _CadastroDevState extends State<CadastroDev> {
 
   @override
   Widget build(BuildContext context) {
-    final _loginController = TextEditingController();
+
+    final _nameController = TextEditingController();
+    final _emailController = TextEditingController();
+    final _techsController = TextEditingController();
+    final _githubUserNameController = TextEditingController();
+
     return Scaffold(
         backgroundColor: Color(0xFFF1F1F1),
         body: SingleChildScrollView(
@@ -53,7 +59,7 @@ class _CadastroDevState extends State<CadastroDev> {
                     ),
                   ),
                   Image.asset("lib/assets/Logo.png"),
-                  const SizedBox(height: 90),
+                  const SizedBox(height: 80),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -63,29 +69,17 @@ class _CadastroDevState extends State<CadastroDev> {
                             color: Color(0xFF476268),
                           ),
                           width: 307,
-                          height: 238,
-                          padding: EdgeInsets.only(left: 15, right: 15),
+                          height: 550,
+                          padding: EdgeInsets.all(15),
                           child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
-                                Text(
-                                  "Insira seu login do Github",
-                                  style: GoogleFonts.offside(
-                                    color: Color(0xFFFFFFFF),
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                                TextField(
-                                  controller: _loginController,
-                                  decoration: InputDecoration(
-                                      filled: true,
-                                      fillColor: Color(0xFFF1F1F1),
-                                      border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10)))),
-                                ),
+                                buildTextInput("Insira seu login do Github",
+                                    _githubUserNameController),
+                                buildTextInput("Insira seu nome", _nameController),  
+                                buildTextInput("Insira seu email", _emailController, keyboardType: TextInputType.emailAddress),  
+                                buildTextInput("Insira as technologias que você tem domínio", _techsController),  
                                 ButtonTheme(
                                   minWidth: 250,
                                   child: RaisedButton(
@@ -95,7 +89,7 @@ class _CadastroDevState extends State<CadastroDev> {
                                     padding: EdgeInsets.all(10),
                                     color: Color(0xFFF1F1F1),
                                     onPressed: () {
-                                      getDados(_loginController.text);
+                                      getDados(_githubUserNameController.text);
                                     },
                                     child: Text(
                                       "Confirmar cadastro",
@@ -107,11 +101,42 @@ class _CadastroDevState extends State<CadastroDev> {
                                     ),
                                   ),
                                 ),
-                              ]))
+                              ]
+                            )
+                          ),
                     ],
                   ),
+                          const SizedBox(height: 15,)
                 ],
               )),
         ));
+  }
+
+  Widget buildTextInput(String label, TextEditingController controller, {TextInputType keyboardType}) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Text(
+          label,
+          textAlign: TextAlign.center,
+          style: GoogleFonts.offside(
+            color: Color(0xFFFFFFFF),
+            fontSize: 20,
+            fontWeight: FontWeight.w400
+          ),
+        ),
+        const SizedBox(height: 10),
+        TextField(
+          controller: controller,
+          keyboardType: keyboardType != null ? keyboardType : TextInputType.text,
+          decoration: InputDecoration(
+              
+              filled: true,
+              fillColor: Color(0xFFF1F1F1),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10)))),
+        )
+      ],
+    );
   }
 }

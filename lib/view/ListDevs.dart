@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../components/DevInfoContainer.dart';
@@ -13,22 +11,52 @@ class ListDevs extends StatefulWidget {
 class _ListDevsState extends State<ListDevs> {
   var devs = [
     {
-      'name': "Dev 1",
+      'name': "Iago",
       'email': "dev@teste.com",
-      'githubUserName': 'devGit1',
+      'githubUserName': 'iago-farias',
+      'githubProfilePicUrl': "https://avatars3.githubusercontent.com/u/61480933?v=4",
+      'location': "Brasília, Brazil",
       'techs': ["Java", "C"],
     },
     {
-      'name': "Dev 2",
+      'name': "Mateus",
       'email': "dev@teste.com",
-      'githubUserName': 'devGit1',
+      'githubUserName': 'mateusmsc',
+      'githubProfilePicUrl': "https://avatars0.githubusercontent.com/u/44880846?v=4",
+      'location': "Brasília, Brazil",
       'techs': ["Java"],
     },
     {
-      'name': "Dev 3",
+      'name': "Iago",
       'email': "dev@teste.com",
-      'githubUserName': 'devGit1',
-      'techs': ["Java", "C", "C++"],
+      'githubUserName': 'iago-farias',
+      'githubProfilePicUrl': "https://avatars3.githubusercontent.com/u/61480933?v=4",
+      'location': "Brasília, Brazil",
+      'techs': ["Java", "C"],
+    },
+    {
+      'name': "Mateus",
+      'email': "dev@teste.com",
+      'githubUserName': 'mateusmsc',
+      'githubProfilePicUrl': "https://avatars0.githubusercontent.com/u/44880846?v=4",
+      'location': "Brasília, Brazil",
+      'techs': ["Java"],
+    },
+    {
+      'name': "Iago",
+      'email': "dev@teste.com",
+      'githubUserName': 'iago-farias',
+      'githubProfilePicUrl': "https://avatars3.githubusercontent.com/u/61480933?v=4",
+      'location': "Brasília, Brazil",
+      'techs': ["Java", "C"],
+    },
+    {
+      'name': "Mateus",
+      'email': "dev@teste.com",
+      'githubUserName': 'mateusmsc',
+      'githubProfilePicUrl': "https://avatars0.githubusercontent.com/u/44880846?v=4",
+      'location': "Brasília, Brazil",
+      'techs': ["Java"],
     },
   ];
 

@@ -21,6 +21,7 @@ class Dev {
         techs = json['techs'],
         id = id_firebase;
 
+
   Map<String, dynamic> toMap() => {
         "name": name,
         "githubUserName": githubUserName,
