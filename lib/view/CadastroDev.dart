@@ -1,3 +1,5 @@
+import 'package:findev/controller/Dev_controller.dart';
+import 'package:findev/model/Dev.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -5,38 +7,88 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
+import '../controller/Dev_controller.dart';
+
 class CadastroDev extends StatefulWidget {
   @override
   _CadastroDevState createState() => _CadastroDevState();
 }
 
 class _CadastroDevState extends State<CadastroDev> {
-  Map<String, dynamic> user;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _formKey = GlobalKey<FormState>();
 
-  TextEditingController loginInput = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController techsController = TextEditingController();
+  TextEditingController githubUserNameController = TextEditingController();
 
-  Future<Map<String, dynamic>> getDados(String userLogin) async {
+  String userLocation = "";
+  String githubProfilePicUrl = "";
+
+  Future<String> getDados(String userLogin) async {
     String uri = "https://api.github.com/users/" + userLogin;
     http.Response response = await http.get(uri);
-    user = json.decode(response.body);
+    Map<String, dynamic> user = json.decode(response.body);
 
     // "message": "Not Found"
     if (user['message'] != "Not Found") {
-      print(user);
+      userLocation = user['location'];
+      githubProfilePicUrl = user['avatar_url'];
+
+      return "Usuário encontrado";
     } else {
-      print('Error');
+      return "Usuário não encontrado";
     }
+  }
+
+  _displaySnackBar(BuildContext context, String message) {
+    final snackBar = SnackBar(
+      content: Text(message),
+      backgroundColor:
+          message == "Erro no cadastro" ? Colors.red[800] : Colors.green[900],
+    );
+    _scaffoldKey.currentState.showSnackBar(snackBar);
+  }
+
+  void createDev() async {
+    DevController devController = new DevController();
+    List<String> userTechs = techsController.text.trim().split(",");
+
+    String message = await getDados(githubUserNameController.text);
+
+    print(message);
+
+    if (message != "Erro no cadastro") {
+      Dev dev = new Dev(nameController.text, githubUserNameController.text,
+          githubProfilePicUrl, userLocation, userTechs);
+
+      devController.save(dev).then((res) => print(res));
+
+      clearTextFields();
+
+      _displaySnackBar(context, "Dev cadastrado");
+
+      return;
+    }
+
+    _displaySnackBar(context, message);
+  }
+
+  void clearTextFields() {
+    nameController.text = "";
+    emailController.text = "";
+    techsController.text = "";
+    githubUserNameController.text = "";
+
+    userLocation = "";
+    githubProfilePicUrl = "";
   }
 
   @override
   Widget build(BuildContext context) {
-
-    final _nameController = TextEditingController();
-    final _emailController = TextEditingController();
-    final _techsController = TextEditingController();
-    final _githubUserNameController = TextEditingController();
-
     return Scaffold(
+        key: _scaffoldKey,
         backgroundColor: Color(0xFFF1F1F1),
         body: SingleChildScrollView(
           child: DefaultTextStyle(
@@ -64,22 +116,32 @@ class _CadastroDevState extends State<CadastroDev> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            color: Color(0xFF476268),
-                          ),
-                          width: 307,
-                          height: 550,
-                          padding: EdgeInsets.all(15),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          color: Color(0xFF476268),
+                        ),
+                        width: 307,
+                        height: 600,
+                        padding: EdgeInsets.all(15),
+                        child: Form(
+                          key: _formKey,
                           child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 buildTextInput("Insira seu login do Github",
-                                    _githubUserNameController),
-                                buildTextInput("Insira seu nome", _nameController),  
-                                buildTextInput("Insira seu email", _emailController, keyboardType: TextInputType.emailAddress),  
-                                buildTextInput("Insira as technologias que você tem domínio", _techsController),  
+                                 githubUserNameController),
+                                buildTextInput(
+                                    "Insira seu nome", nameController),
+                                buildTextInput(
+                                    "Insira seu email", emailController,
+                                    keyboardType: TextInputType.emailAddress,
+                                    placeHolder: "exemplo@exemplo.com"),
+                                buildTextInput(
+                                    "Insira as technologias que você tem domínio",
+                                    techsController,
+                                    placeHolder: "Tech 1, Tech 2, Tech 3, ..."),
+                                const SizedBox(height: 25,),
                                 ButtonTheme(
                                   minWidth: 250,
                                   child: RaisedButton(
@@ -89,7 +151,9 @@ class _CadastroDevState extends State<CadastroDev> {
                                     padding: EdgeInsets.all(10),
                                     color: Color(0xFFF1F1F1),
                                     onPressed: () {
-                                      getDados(_githubUserNameController.text);
+                                      if (_formKey.currentState.validate()) {
+                                        createDev();
+                                      }
                                     },
                                     child: Text(
                                       "Confirmar cadastro",
@@ -101,18 +165,21 @@ class _CadastroDevState extends State<CadastroDev> {
                                     ),
                                   ),
                                 ),
-                              ]
-                            )
-                          ),
+                              ]),
+                        ),
+                      ),
                     ],
                   ),
-                          const SizedBox(height: 15,)
+                  const SizedBox(
+                    height: 15,
+                  )
                 ],
               )),
         ));
   }
 
-  Widget buildTextInput(String label, TextEditingController controller, {TextInputType keyboardType}) {
+  Widget buildTextInput(String label, TextEditingController controller,
+      {TextInputType keyboardType, String placeHolder}) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
@@ -120,17 +187,24 @@ class _CadastroDevState extends State<CadastroDev> {
           label,
           textAlign: TextAlign.center,
           style: GoogleFonts.offside(
-            color: Color(0xFFFFFFFF),
-            fontSize: 20,
-            fontWeight: FontWeight.w400
-          ),
+              color: Color(0xFFFFFFFF),
+              fontSize: 20,
+              fontWeight: FontWeight.w400),
         ),
         const SizedBox(height: 10),
-        TextField(
+        TextFormField(
+          validator: (value) {
+                  if (value.isEmpty) {
+                    return "Por favor preencha esse campo";
+                  }
+
+                  return null;
+                },
           controller: controller,
-          keyboardType: keyboardType != null ? keyboardType : TextInputType.text,
+          keyboardType:
+              keyboardType != null ? keyboardType : TextInputType.text,
           decoration: InputDecoration(
-              
+              hintText: placeHolder,
               filled: true,
               fillColor: Color(0xFFF1F1F1),
               border: OutlineInputBorder(

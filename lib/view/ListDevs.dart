@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import '../components/DevInfoContainer.dart';
 import '../model/Dev.dart';
+import '../controller/Dev_controller.dart';
 
 class ListDevs extends StatefulWidget {
   @override
@@ -9,7 +11,9 @@ class ListDevs extends StatefulWidget {
 }
 
 class _ListDevsState extends State<ListDevs> {
-  var devs = [
+  List<Dev> devs = [];
+
+  /*var devs = [
     {
       'name': "Iago",
       'email': "dev@teste.com",
@@ -64,7 +68,20 @@ class _ListDevsState extends State<ListDevs> {
       'location': "Brasília, Brazil",
       'techs': ["Java"],
     },
-  ];
+  ];*/
+
+  void loadDevs() async {
+    DevController devController = new DevController();
+
+    devs = await devController.findAll();
+  }
+
+  @override
+  void initState(){
+    loadDevs();
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,10 +136,7 @@ class _ListDevsState extends State<ListDevs> {
                     ),
                   ),
                 ),
-                ...devs.map(
-                  (dev) => devInfoContainer(
-                      Dev.fromJson(dev, '6cPeQrkH4ajpYSdEcaJT'), context),
-                ),
+                ...devs.map((dev) => devInfoContainer(dev, context)),
               ],
             ),
           ),
