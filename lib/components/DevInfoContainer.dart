@@ -99,7 +99,7 @@ Widget devInfoContainer(Dev dev, BuildContext context) {
                         ],
                       ),
                       const SizedBox(
-                        width: 50,
+                        width: 45,
                       ),
                       Column(
                         children: <Widget>[

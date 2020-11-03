@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:findev/model/Dev.dart';
 
-//import 'package:crud_curso_firebase/model/curso.dart';
 class DevDao {
   final databaseReference = FirebaseFirestore.instance;
   final String COLECAO = "dev";
@@ -30,7 +29,6 @@ class DevDao {
 
   Future<List<Dev>> findAll() async {
     QuerySnapshot devs = await databaseReference.collection(COLECAO).get();
-    //List<Dev> listDevs = List<Dev>.from(parsed.map((i) => Dev.fromJson(i)));
     List<Dev> listDevs = List();
 
     devs.docs.forEach((element) {

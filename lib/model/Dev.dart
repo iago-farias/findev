@@ -8,13 +8,18 @@ class Dev {
   String location;
   List techs;
 
-  Dev(this.name, this.githubUserName, this.githubProfilePicUrl, this.location,
+  Dev(this.name,
+      this.email, 
+      this.githubUserName, 
+      this.githubProfilePicUrl, 
+      this.location,
       this.techs,
       {this.id});
 
   Dev.fromJson(Map<String, dynamic> json, String id_firebase)
       : name = json['name'],
         githubUserName = json['githubUserName'],
+        email = json['email'],
         githubProfilePicUrl = json['githubProfilePicUrl'],
         location = json['location'],
         techs = json['techs'],
@@ -23,6 +28,7 @@ class Dev {
 
   Map<String, dynamic> toMap() => {
         "name": name,
+        "email": email,
         "githubUserName": githubUserName,
         "githubProfilePicUrl": githubProfilePicUrl,
         "location": location,

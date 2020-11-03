@@ -60,7 +60,7 @@ class _CadastroDevState extends State<CadastroDev> {
     print(message);
 
     if (message != "Erro no cadastro") {
-      Dev dev = new Dev(nameController.text, githubUserNameController.text,
+      Dev dev = new Dev(nameController.text, emailController.text, githubUserNameController.text,
           githubProfilePicUrl, userLocation, userTechs);
 
       devController.save(dev).then((res) => print(res));
