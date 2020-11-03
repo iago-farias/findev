@@ -11,6 +11,5 @@ Aplicativo desenvolvido durante o curso de Ciência da Computação no Instituto
 
 Abaixo temos uma demostração da aplicação, mais especificamente das telas que a compõe.
 
-<p align="center">
+
 ![Captura de tela](http://g.recordit.co/W4eLvG7rvf.gif)
-</p>
